@@ -1,0 +1,19 @@
+.userlist {
+    width: 200px;
+    height: 90vh;
+    overflow: hidden;
+    background-color: #FFD700;
+    text-align: right;
+    position: static;
+    float: left;
+}
+
+.userlist p {
+    text-align: center;
+    display: block;
+    padding: 2px 16px;
+}
+
+.userlist h2 {
+    text-align: center;
+}

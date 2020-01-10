@@ -1,0 +1,15 @@
+.chatbox {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    float: left;
+}
+.btn-holder {
+    position: absolute;
+    left: 200px; bottom: 0;
+}
+.inbox-holder {
+    position: absolute;
+    left: 300px; bottom: 0;
+}
