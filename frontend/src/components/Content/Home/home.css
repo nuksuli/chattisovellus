@@ -1,0 +1,10 @@
+.home {
+    text-align: left;
+    background-color: aqua;
+}
+.home img {
+    height: 706px;
+}
+.home img:hover {
+    filter: grayscale(100%);
+}
