@@ -1,27 +1,28 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
-
-let messages = [
-    {
-        text: "moikka",
-        time: new Date(),
-    },
-    {
-        text: "sadasda0",
-        time: new Date(),
-    }
-]
-app.use(cors())
-app.use(express.static('build'))
-app.use(bodyParser.json())
-
-
+const socket = require('socket.io')
 const PORT = 3001
-app.listen(PORT, () => {
-    console.log(`Server running on ${PORT}`)
+var server = app.listen(PORT, () => {
+    console.log("server up!")
 })
+
+messages = []
+app.use(express.static('public'))
+app.use(cors())
+
+
+
+//socket
+const io = socket(server)
+io.on('connection', () => {
+    console.log("connection!")
+})
+
+
+//express
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
 
 app.get('/api/messages', (req, res) => {
     res.json(messages)
