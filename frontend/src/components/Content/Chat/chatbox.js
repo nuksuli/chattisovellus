@@ -1,33 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./chatbox.css"
+import messageService from './Services/chatservice.js'
 
 
 const Chatbox = () => {
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
-    const [mesNum, setMesNum] = useState(0)
 
     const handleChange = (event) => {
         setMessage(event.target.value)
     }
 
+
+    useEffect(() => {
+        messageService
+            .getAll()
+            .then(initialMessages => setMessages(m => m.concat(initialMessages)))
+    }, [])
+
     const addMessage = (event) => {
-        const date = Date()
-        const newMessage = {
-            message: message,
-            date: date.slice(0, 24),
-            id: mesNum
-        }
-        setMesNum(mesNum + 1)
         event.preventDefault()
-        setMessages(messages.concat(newMessage))
+        messageService
+            .post({ mes: message })
+            .then(res => setMessages(res))
         setMessage('')
     }
-    const messagesToShow = messages.map(m => <p key={m.id}>{m.date}: {m.message}</p>)
+    const MessagesToShow = () => {
+        return (
+            messages.map((m, i) => <p key={i}>{m.time} {m.text}</p>)
+        )
+    }
 
     return (
         <form onSubmit={addMessage} className="chatbox">
-            {messagesToShow}
+            <MessagesToShow />
             <div>
                 <button className="btn-holder" type="submit">lähetä viesti:</button>
             </div>
