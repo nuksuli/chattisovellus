@@ -1,20 +1,23 @@
 import React from 'react'
 import { useState } from 'react'
 
-const Login = ({ connection }) => {
+const Login = ({ connection, setUsers }) => {
     const [user, setUser] = useState("")
+    const io = require('socket.io-client')
+    const socket = io('localhost:3001')
+    socket.on('users', (data) => {
+        console.log({ data })
+        setUsers(data)
+    })
     const makeConnection = (event) => {
         event.preventDefault()
-        const io = require('socket.io-client')
-        const socket = io('localhost:3001')
-        socket.on('connection', () => {
-            console.log('connect!')
-        })
+        socket.emit('user', (user))
         setUser("")
         connection(true)
     }
     const handleChange = (event) => {
         setUser(event.target.value)
+        console.log(user)
     }
     return (
         < form className="login" onSubmit={makeConnection} >

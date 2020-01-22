@@ -6,10 +6,11 @@ import Login from './login.js'
 
 const Chat = () => {
     const [connection, setConnection] = useState(false)
+    const [users, setUsers] = useState([])
     if (connection) {
         return (
             <div className="chat">
-                <Userlist />
+                <Userlist users={users} />
                 <Chatbox />
             </div>
         )
@@ -17,8 +18,10 @@ const Chat = () => {
     else {
         return (
             <div className="container">
-                <Userlist />
+                <Userlist users={users} />
                 <Login
+                    users={users}
+                    setUsers={setUsers}
                     connection={setConnection}
                 />
             </div>

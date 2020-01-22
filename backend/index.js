@@ -8,18 +8,29 @@ var server = app.listen(PORT, () => {
 })
 
 messages = []
+users = []
 app.use(express.static('public'))
 app.use(cors())
-
+const userNames = users.map(u => u.name)
 
 
 //socket
 const io = socket(server)
-io.on('connection', (socket) => {
-    console.log("connection")
-    socket.on('disconnect', () => {
-        console.log("disconnect")
+io.sockets.on('connection', (socket) => {
+    socket.on('user', (user) => {
+        const newUser = {
+            name: user
+        }
+        users = users.concat(newUser)
+        console.log(userNames)
+        socket.on('disconnect', () => {
+            users = users.filter(u => u.name !== user)
+            io.emit('users', (users))
+            console.log("disconnect")
+        })
     })
+    socket.emit('users', userNames)
+
 })
 
 
@@ -29,6 +40,10 @@ app.use(bodyParser.json())
 
 app.get('/api/messages', (req, res) => {
     res.json(messages)
+})
+
+app.get('/api/users', (req, res) => {
+    res.json(userNames)
 })
 
 app.post('/api/messages', (req, res) => {

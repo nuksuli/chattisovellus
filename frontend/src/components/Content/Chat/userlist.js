@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './userlist.css'
 
 
-const Userlist = () => {
-    const [users, setUsers] = useState([])
+const Userlist = ({ users }) => {
     const html = users.map(u =>
         <p key={u}>{u}</p>
     )
