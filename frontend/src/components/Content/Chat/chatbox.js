@@ -30,7 +30,6 @@ const Chatbox = () => {
             messages.map((m, i) => <p key={i}>{m.time} {m.text}</p>)
         )
     }
-
     return (
         <form onSubmit={addMessage} className="chatbox">
             <MessagesToShow />

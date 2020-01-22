@@ -15,8 +15,11 @@ app.use(cors())
 
 //socket
 const io = socket(server)
-io.on('connection', () => {
-    console.log("connection!")
+io.on('connection', (socket) => {
+    console.log("connection")
+    socket.on('disconnect', () => {
+        console.log("disconnect")
+    })
 })
 
 

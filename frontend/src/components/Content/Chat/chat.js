@@ -1,23 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Userlist from './userlist.js'
 import "./chat.css"
 import Chatbox from './chatbox.js'
+import Login from './login.js'
 
 const Chat = () => {
-    console.log('1')
-    const io = require('socket.io-client')
-    const socket = io('http//localhost:3001')
-    console.log('2')
-    socket.on('connection', () => {
-        console.log('connect!')
-    })
-
-    return (
-        <div className="chat">
-            <Userlist />
-            <Chatbox />
-        </div>
-    )
+    const [connection, setConnection] = useState(false)
+    if (connection) {
+        return (
+            <div className="chat">
+                <Userlist />
+                <Chatbox />
+            </div>
+        )
+    }
+    else {
+        return (
+            <div className="container">
+                <Userlist />
+                <Login
+                    connection={setConnection}
+                />
+            </div>
+        )
+    }
 }
 
 export default Chat;

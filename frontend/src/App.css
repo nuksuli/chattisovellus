@@ -13,8 +13,9 @@
   }
 }
 
-.App-body {
+body {
   background-color: #00FFFF;
+  height: 100%;
 }
 
 .App-link {
