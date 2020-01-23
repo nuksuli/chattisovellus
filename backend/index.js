@@ -17,19 +17,21 @@ const userNames = users.map(u => u.name)
 //socket
 const io = socket(server)
 io.sockets.on('connection', (socket) => {
+    console.log("connection!")
     socket.on('user', (user) => {
         const newUser = {
             name: user
         }
+        console.log(newUser)
         users = users.concat(newUser)
-        console.log(userNames)
+        console.log(users)
+        io.emit('users', users)
         socket.on('disconnect', () => {
             users = users.filter(u => u.name !== user)
             io.emit('users', (users))
             console.log("disconnect")
         })
     })
-    socket.emit('users', userNames)
 
 })
 
@@ -43,7 +45,7 @@ app.get('/api/messages', (req, res) => {
 })
 
 app.get('/api/users', (req, res) => {
-    res.json(userNames)
+    res.json(users)
 })
 
 app.post('/api/messages', (req, res) => {

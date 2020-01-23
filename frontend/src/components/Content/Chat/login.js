@@ -5,6 +5,8 @@ const Login = ({ connection, setUsers }) => {
     const [user, setUser] = useState("")
     const io = require('socket.io-client')
     const socket = io('localhost:3001')
+    socket.on('connection', () => {
+    })
     socket.on('users', (data) => {
         console.log({ data })
         setUsers(data)
@@ -12,6 +14,7 @@ const Login = ({ connection, setUsers }) => {
     const makeConnection = (event) => {
         event.preventDefault()
         socket.emit('user', (user))
+        console.log(user)
         setUser("")
         connection(true)
     }

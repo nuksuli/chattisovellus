@@ -3,8 +3,8 @@ import './userlist.css'
 
 
 const Userlist = ({ users }) => {
-    const html = users.map(u =>
-        <p key={u}>{u}</p>
+    const html = users.map((u, i) =>
+        <p key={i}>{u.name}</p>
     )
     return (
         <div className="userlist">
